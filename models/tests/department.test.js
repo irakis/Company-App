@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 
 describe('Department', () => {
     it('should throw an error if no "name" arg', () => {
-        const testDepartment= new Department({}); // create new Department, but don't set `name` attr value
+        const testDepartment = new Department({}); // create new Department, but don't set `name` attr value
         testDepartment.validate(err => {
             expect(err.errors.name).to.exist;
         });

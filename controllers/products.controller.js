@@ -29,9 +29,9 @@ exports.getSingle = async (req, res) => {
 exports.postSingle = async (req, res) => {
     const { name, client } = req.body;
     try {
-        const newProd = new Product({ name, client })
-        await newProd.save();
-        res.json(await newProd);
+        const newProduct = new Product({ name, client })
+        await newProduct.save();
+        res.json(await newProduct);
     } catch (err) { res.status(500).json({ message: err }) }
 };
 
