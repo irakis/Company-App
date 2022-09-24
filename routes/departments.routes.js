@@ -4,9 +4,9 @@ const Department = require('../models/department.model');
 
 router.get('/departments', async (req, res) => {
   try {
-    const dep = res.json(await Department.find())
-    if (!dep) res.status(404).json({ message: "Not found" })
-    else res.json(data);
+    const selectedDepartment = res.json(await Department.find())
+    if (!selectedDepartment) res.status(404).json({ message: "Not found" })
+    else res.json(await data);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -16,9 +16,9 @@ router.get('/departments/random', async (req, res) => {
   try {
     const count = await Department.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const dep = await Department.findOne().skip(rand);
-    if (!dep) res.status(404).json({ message: "Not found" })
-    else res.json(dep)
+    const selectedDepartment = await Department.findOne().skip(rand);
+    if (!selectedDepartment) res.status(404).json({ message: "Not found" })
+    else res.json(await selectedDepartment)
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -26,9 +26,9 @@ router.get('/departments/random', async (req, res) => {
 
 router.get('/departments/:id', async (req, res) => {
   try {
-    const dep = await Department.findById(req.params.id)
-    if (!dep) res.status(404).json({ message: 'Not found' });
-    else res.json(dep)
+    const selectedDepartment = await Department.findById(req.params.id)
+    if (!selectedDepartment) res.status(404).json({ message: 'Not found' });
+    else res.json(await selectedDepartment)
   }
   catch (err) {
     res.status(500).json({ message: err });
@@ -47,10 +47,11 @@ router.post('/departments', async (req, res) => {
 router.put('/departments/:id', async (req, res) => {
   const { name } = req.body;
   try {
-    const dep = await Department.findById(req.params.id);
-    if (dep) {
-      await Department.updateOne({ _id: req.params.id }, { $set: { name: name } })
-      res.json({ message: 'OK' });
+    const selectedDepartment = await Department.findById(req.params.id);
+    if (selectedDepartment) {
+      selectedDepartment.name = name;
+      selectedDepartment.save();
+      res.json(await selectedDepartment);
     } else res.status(404).json({ message: 'Not found' });
   } catch (err) {
     res.status(500).json({ message: err });
@@ -59,13 +60,13 @@ router.put('/departments/:id', async (req, res) => {
 
 router.delete('/departments/:id', async (req, res) => {
   try {
-    const dep = await Department.findById(req.params.id);
-    if (dep) {
+    const selectedDepartment = await Department.findById(req.params.id);
+    if (selectedDepartment) {
       await Department.deleteOne({ _id: req.params.id });
-      const leftDep = await Department.find()
-      res.json(leftDep);
+      const leftDepartments = await Department.find()
+      res.json(await leftDepartments);
     } else res.status(404).json({ message: 'Not found' })
-  } catch(err) { res.status(500).json({ message: err });}
+  } catch (err) { res.status(500).json({ message: err }); }
 });
 
 module.exports = router;
