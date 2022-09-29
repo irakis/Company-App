@@ -111,13 +111,17 @@ describe('Product', () => {
         });
 
         it('should delete many items with "deleteMany" method', async () => {
-            await Product.deleteMany();
+            await Product.deleteMany()
             const amountOfProducts = (await Product.find()).length;
             expect(amountOfProducts).to.be.equal(0);
         });
 
         afterEach(async () => {
-            await Product.deleteMany()
+            try {
+                await Product.deleteMany()
+            } catch (e) {
+                console.log(e);
+            }
         });
     });
 

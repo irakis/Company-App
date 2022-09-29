@@ -72,24 +72,24 @@ describe('Department', () => {
             expect(updatedDepartment).to.not.be.null;
         }),
 
-            it('should update properly one document with "save" method', async () => {
-                const testDepartment = await Department.findOne({ name: 'Department #1' })
-                testDepartment.name = '=Department #1=';
-                await testDepartment.save();
+        it('should update properly one document with "save" method', async () => {
+            const testDepartment = await Department.findOne({ name: 'Department #1' })
+            testDepartment.name = '=Department #1=';
+            await testDepartment.save();
 
-                const updatedDepartment = await Department.findOne({ name: '=Department #1=' })
-                expect(updatedDepartment).to.not.be.null;
-            }),
+            const updatedDepartment = await Department.findOne({ name: '=Department #1=' })
+            expect(updatedDepartment).to.not.be.null;
+        }),
 
-            it('should update properly many documents with "updateMany" method', async () => {
-                await Department.deleteMany();
-                const selectedDepartments = await Department.find();
-                expect(selectedDepartments.length).to.be.equal(0)
-            }),
+        it('should update properly many documents with "updateMany" method', async () => {
+            await Department.deleteMany();
+            const selectedDepartments = await Department.find();
+            expect(selectedDepartments.length).to.be.equal(0)
+        }),
 
-            afterEach(async () => {
-                await Department.deleteMany();
-            });
+        afterEach(async () => {
+            await Department.deleteMany();
+        });
     });
 
     describe('Deleting data', async () => {

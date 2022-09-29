@@ -106,7 +106,8 @@ describe('Employee', () => {
         it('should delete one element with "remove" method', async () => {
             const selectedEmployee = await Employee.findOne({ firstName: 'Name #3' });
             await selectedEmployee.remove();
-            expect(await Employee.findOne({ firstName: 'Name #3' })).to.be.null;
+            const findDeletedEmployee = await Employee.findOne({ firstName: 'Name #3' });
+            expect(findDeletedEmployee).to.be.null;
         });
 
         it('should delete many items with "deleteMany" method', async () => {
