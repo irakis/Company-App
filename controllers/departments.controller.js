@@ -3,8 +3,8 @@ const Department = require('../models/department.model');
 exports.getAll = async (req, res) => {
     try {
         const selectedDepartment = res.json(await Department.find())
-        if (selectedDepartment) res.status(404).json({ message: "Not found" })
-        else res.json(data);
+        if (!selectedDepartment) { res.status(404).json({ message: "Not found" })
+        } else res.json(data);
     } catch (err) {
         res.status(500).json({ message: err });
     }
