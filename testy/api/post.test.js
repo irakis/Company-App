@@ -2,7 +2,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../server.js');
 const Department = require('../../models/department.model');
-//const { post } = require('../../routes/departments.routes.js');
+const { post } = require('../../routes/departments.routes.js');
+const { mongoErrorContextSymbol } = require('mongodb/lib/core/index.js');
 
 chai.use(chaiHttp);
 
@@ -12,12 +13,11 @@ const request = chai.request;
 describe('POST /api/departments', () => {
 
     it('/ should insert new document to db and return success', async () => {
-        const res = await request(server).post('/departments').send({ name: 'Department #1' });
-        const newDepartment = await Department.findOne({ name: 'Department #1' });
+        const res = await request(server).post('/api/departments').send({ name: 'Department #4' });
+        const newDepartment = await Department.findOne({ name: 'Department #4' });
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('object');
         expect(newDepartment).to.not.be.null;
-        expect(res.body.message).to.be.equal('OK');
     });
 
     after(async () => {
